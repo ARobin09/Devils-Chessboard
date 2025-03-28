@@ -70,22 +70,24 @@ class board:
         flip_x = flip % self.n + 1
         flip_y = flip // self.n + 1
         print(f"Encoding...\nHiding key at ({x},{y})\nFlipping coin at position ({flip_x},{flip_y})")
-        print("Before flip:")
+        # print("Before flip:")
         
-        print(str(self))
+        # print(str(self))
         self.flip(flip)
-        print("After flip:")
-        print(str(self))
+        # print("After flip:")
+        # print(str(self))
         self.searching = True
     
     def find_key(self):
         if(not self.searching):
-            print("No key hidden")
+            print("\nNo key hidden")
             return
         self.searching = False
-        assert self.current_key == self.code, "Key is incorrect"
-        print("Searching for key...")
-        print(f"Key found at {self.code}")
+        assert self.current_key == self.code, "\nKey is incorrect"
+        print("\nSearching for key...")
+        code_x = self.code % self.n + 1
+        code_y = self.code // self.n + 1
+        print(f"Key is at ({code_x},{code_y})")
 
 
     def __str__(self):
@@ -114,12 +116,50 @@ class board:
     
     def get_code(self):
         return format(self.code, '06b')
+def play_game():
+    print("Welcome to The Devil's Chessboard Puzzle!")
+    lgSize = int(input("Enter the board size (lgSize, e.g., 6 for a 2^6 = 64 square board): "))
+    mode = input("Enter the mode ('H' for all heads, 'T' for all tails, or leave blank for random): ").strip() or None
 
-b = board(4)
-# print(str(b))
-b.hide_key(-1, -1)
-b.hide_key(18, 2)
-# b.hide_key(5)
-# b.hide_key(3)
-b.hide_key(1,1)
-print(str(b.find_key()))
+    # Initialize the board
+    game_board = board(lgSize, mode)
+
+    while True:
+        print("\nCurrent Board:")
+        print(game_board)
+
+        print("\nChoose an action:")
+        print("1. Hide a key")
+        print("2. Find the key")
+        print("3. Quit")
+
+        choice = input("Enter your choice (1/2/3): ").strip()
+
+        if choice == "1":
+            try:
+                x = int(input("\nEnter the x-coordinate of the key (L->R, starting at 1): "))
+                y = int(input("Enter the y-coordinate of the key (T->B, starting at 1): "))
+                game_board.hide_key(x, y)
+                print("\nCurrent Board:")
+                print(game_board)
+            except ValueError:
+                print("\nInvalid input. Please enter valid integers for coordinates.")
+        elif choice == "2":
+            game_board.find_key()
+        elif choice == "3":
+            print("\nThanks for playing!")
+            break
+        else:
+            print("\nInvalid choice. Please enter 1, 2, or 3.")
+
+# Start the game
+play_game()
+
+# b = board(4)
+# # print(str(b))
+# b.hide_key(-1, -1)
+# b.hide_key(18, 2)
+# # b.hide_key(5)
+# # b.hide_key(3)
+# b.hide_key(1,1)
+# print(str(b.find_key()))
