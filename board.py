@@ -154,12 +154,3 @@ def play_game():
 
 # Start the game
 play_game()
-
-# b = board(4)
-# # print(str(b))
-# b.hide_key(-1, -1)
-# b.hide_key(18, 2)
-# # b.hide_key(5)
-# # b.hide_key(3)
-# b.hide_key(1,1)
-# print(str(b.find_key()))
